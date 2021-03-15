@@ -29,13 +29,19 @@
           class="screen-cinema__seats__seat"
           v-for="seat in row.slice(0, 5)"
           :key="seat"
-          @click="test.includes(seat) ? null : selectSeat(seat)"
-          :style="{ pointerEvents: test.includes(seat) ? 'none' : 'all' }"
+          @click="
+            getSeatsOccupied.includes(seat) || !getSelectedMovie
+              ? null
+              : selectSeat(seat)
+          "
+          :style="{
+            pointerEvents: getSeatsOccupied.includes(seat) ? 'none' : 'all'
+          }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
           <GSvg
-            v-if="test.includes(seat)"
+            v-if="getSeatsOccupied.includes(seat)"
             nameIcon="occupied"
             title="occupied"
           />
@@ -52,10 +58,27 @@
           class="screen-cinema__seats__seat"
           v-for="seat in row.slice(5, 11)"
           :key="seat"
+          @click="
+            getSeatsOccupied.includes(seat) || !getSelectedMovie
+              ? null
+              : selectSeat(seat)
+          "
+          :style="{
+            pointerEvents: getSeatsOccupied.includes(seat) ? 'none' : 'all'
+          }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
+          <GSvg
+            v-if="getSeatsOccupied.includes(seat)"
+            nameIcon="occupied"
+            title="occupied"
+          />
+          <GSvg
+            v-show="seatsNumbers.includes(seat)"
+            nameIcon="selected-seat"
+            title="selected seat"
+          />
         </div>
       </div>
       <!-- 3 -->
@@ -64,10 +87,27 @@
           class="screen-cinema__seats__seat"
           v-for="seat in row.slice(11, 19)"
           :key="seat"
+          @click="
+            getSeatsOccupied.includes(seat) || !getSelectedMovie
+              ? null
+              : selectSeat(seat)
+          "
+          :style="{
+            pointerEvents: getSeatsOccupied.includes(seat) ? 'none' : 'all'
+          }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
+          <GSvg
+            v-if="getSeatsOccupied.includes(seat)"
+            nameIcon="occupied"
+            title="occupied"
+          />
+          <GSvg
+            v-show="seatsNumbers.includes(seat)"
+            nameIcon="selected-seat"
+            title="selected seat"
+          />
         </div>
       </div>
       <!-- 4 -->
@@ -76,10 +116,27 @@
           class="screen-cinema__seats__seat"
           v-for="seat in row.slice(19, 28)"
           :key="seat"
+          @click="
+            getSeatsOccupied.includes(seat) || !getSelectedMovie
+              ? null
+              : selectSeat(seat)
+          "
+          :style="{
+            pointerEvents: getSeatsOccupied.includes(seat) ? 'none' : 'all'
+          }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
+          <GSvg
+            v-if="getSeatsOccupied.includes(seat)"
+            nameIcon="occupied"
+            title="occupied"
+          />
+          <GSvg
+            v-show="seatsNumbers.includes(seat)"
+            nameIcon="selected-seat"
+            title="selected seat"
+          />
         </div>
       </div>
       <!-- 5 -->
@@ -88,10 +145,27 @@
           class="screen-cinema__seats__seat"
           v-for="seat in row.slice(28, 38)"
           :key="seat"
+          @click="
+            getSeatsOccupied.includes(seat) || !getSelectedMovie
+              ? null
+              : selectSeat(seat)
+          "
+          :style="{
+            pointerEvents: getSeatsOccupied.includes(seat) ? 'none' : 'all'
+          }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
+          <GSvg
+            v-if="getSeatsOccupied.includes(seat)"
+            nameIcon="occupied"
+            title="occupied"
+          />
+          <GSvg
+            v-show="seatsNumbers.includes(seat)"
+            nameIcon="selected-seat"
+            title="selected seat"
+          />
         </div>
       </div>
       <!-- 6 -->
@@ -100,10 +174,27 @@
           class="screen-cinema__seats__seat"
           v-for="seat in row.slice(38, 50)"
           :key="seat"
+          @click="
+            getSeatsOccupied.includes(seat) || !getSelectedMovie
+              ? null
+              : selectSeat(seat)
+          "
+          :style="{
+            pointerEvents: getSeatsOccupied.includes(seat) ? 'none' : 'all'
+          }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
+          <GSvg
+            v-if="getSeatsOccupied.includes(seat)"
+            nameIcon="occupied"
+            title="occupied"
+          />
+          <GSvg
+            v-show="seatsNumbers.includes(seat)"
+            nameIcon="selected-seat"
+            title="selected seat"
+          />
         </div>
       </div>
     </div>
@@ -111,6 +202,9 @@
 </template>
 
 <script>
+//
+import { mapGetters } from "vuex";
+//
 export default {
   name: "ScreenCinema",
   data() {
@@ -167,9 +261,11 @@ export default {
         49,
         50
       ],
-      seatsNumbers: [],
-      test: [4]
+      seatsNumbers: []
     };
+  },
+  computed: {
+    ...mapGetters(["getSelectedMovie", "getSeatsOccupied"])
   },
   methods: {
     //

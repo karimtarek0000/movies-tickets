@@ -5,7 +5,7 @@
       <!-- Movie card -->
       <MovieCard
         slot="cardMovie"
-        v-for="movie in getAllMovies"
+        v-for="movie in allMovies"
         :key="movie.id"
         :movie="movie"
         @movieInfo="getMovie = $event"
@@ -17,15 +17,19 @@
       <!-- 1) - Choose day -->
       <SelectBox
         slot="selectBox"
+        :options="getDatesPartys"
         v-model="selectDay"
+        @changed="changedDate"
+        type="date"
         note="Note: Only the day of the current week is chosen"
-        :options="days"
+        label="choose the day"
       />
       <!-- 2) - Choose a party -->
       <SelectBox
         slot="selectBox"
+        :options="timesPartys"
         v-model="selectParty"
-        :options="party"
+        @changed="changedParty"
         label="choose a party"
       />
       <!-- 3) - Screen cinema -->
@@ -41,28 +45,62 @@ import SelectBox from "@/components/SelectBox";
 import SectionListMovie from "@/components/SectionListMovie";
 import SectionActionUser from "@/components/SectionActionUser";
 import ScreenCinema from "@/components/ScreenCinema";
+import { mapState, mapGetters } from "vuex";
 //
 export default {
   name: "Home",
   data() {
     return {
       getMovie: null,
-      selectDay: 2,
-      selectParty: "",
-      days: [1, 2, 3, 4, 5],
-      party: [1, 2, 3, 4, 5]
+      selectDay: 1,
+      selectParty: 1
     };
   },
   computed: {
-    getAllMovies() {
-      return this.$store.state.allMovies;
-    },
+    //
+    ...mapState(["allMovies", "timesPartys"]),
+    //
+    ...mapGetters(["getDatesPartys"]),
+    //
     statusGetMovie() {
       return this.getMovie !== null;
     }
   },
+  methods: {
+    //
+    changedParty() {
+      if (this.getMovie) {
+        this.$store.commit("setOccupied", this.selectParty);
+      }
+    },
+    //
+    changedDate() {
+      if (this.getMovie && this.selectDay !== 1) {
+        this.$store.dispatch("getPartysMovie", {
+          nameMovie: this.getMovie.name,
+          dateParty: this.selectDay
+        });
+      }
+    }
+  },
   created() {
     this.$store.dispatch("getMovies");
+    this.$store.dispatch("getDates");
+  },
+  watch: {
+    //
+    getMovie(newMovie) {
+      //
+      this.$store.commit("setSelectedMovie", newMovie);
+
+      //
+      if (!newMovie) {
+        this.$store.commit("setPartysMovie", null);
+        this.$store.commit("setOccupied");
+        this.selectDay = 1;
+        this.selectParty = 1;
+      }
+    }
   },
   components: {
     SectionListMovie,
