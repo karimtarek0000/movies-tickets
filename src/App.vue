@@ -48,7 +48,16 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   color: var(--white);
-  overflow: hidden;
+  overflow-x: hidden;
+
+  //
+  @media (min-width: 1310px) {
+    overflow: hidden;
+  }
+
+  @media (max-width: 1310px) {
+    height: auto;
+  }
 }
 
 .app {

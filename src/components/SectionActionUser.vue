@@ -40,11 +40,20 @@ export default {
   text-transform: capitalize;
   padding-left: 80px;
 
+  @media (max-width: 1310px) {
+    padding-left: 0;
+  }
+
   //
   &__head {
     display: flex;
     align-items: center;
     font-weight: 400;
+
+    //
+    @media (max-width: 1310px) {
+      justify-content: center;
+    }
 
     //
     h2 {
@@ -68,6 +77,11 @@ export default {
   &__select-box {
     display: flex;
     margin-top: 20px;
+
+    //
+    @media (max-width: 1310px) {
+      justify-content: center;
+    }
 
     //
     select {

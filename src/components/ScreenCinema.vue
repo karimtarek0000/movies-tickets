@@ -27,73 +27,83 @@
       <div class="screen-cinema__seats__row screen-cinema__seats__row--1">
         <div
           class="screen-cinema__seats__seat"
-          v-for="seat in rowOne"
+          v-for="seat in row.slice(0, 5)"
           :key="seat"
+          @click="test.includes(seat) ? null : selectSeat(seat)"
+          :style="{ pointerEvents: test.includes(seat) ? 'none' : 'all' }"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <GSvg nameIcon="occupied" title="occupied" />
-          <!-- <GSvg nameIcon="selected-seat" title="selected seat" /> -->
+          <GSvg
+            v-if="test.includes(seat)"
+            nameIcon="occupied"
+            title="occupied"
+          />
+          <GSvg
+            v-show="seatsNumbers.includes(seat)"
+            nameIcon="selected-seat"
+            title="selected seat"
+          />
         </div>
       </div>
       <!-- 2 -->
       <div class="screen-cinema__seats__row screen-cinema__seats__row--2">
         <div
           class="screen-cinema__seats__seat"
-          v-for="seat in rowTwo"
+          v-for="seat in row.slice(5, 11)"
           :key="seat"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <GSvg nameIcon="occupied" title="occupied" />
+          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
         </div>
       </div>
       <!-- 3 -->
       <div class="screen-cinema__seats__row screen-cinema__seats__row--3">
         <div
           class="screen-cinema__seats__seat"
-          v-for="seat in rowThree"
+          v-for="seat in row.slice(11, 19)"
           :key="seat"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <GSvg nameIcon="occupied" title="occupied" />
+          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
         </div>
       </div>
       <!-- 4 -->
       <div class="screen-cinema__seats__row screen-cinema__seats__row--4">
         <div
           class="screen-cinema__seats__seat"
-          v-for="seat in rowFour"
+          v-for="seat in row.slice(19, 28)"
           :key="seat"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <GSvg nameIcon="occupied" title="occupied" />
+          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
         </div>
       </div>
       <!-- 5 -->
       <div class="screen-cinema__seats__row screen-cinema__seats__row--5">
         <div
           class="screen-cinema__seats__seat"
-          v-for="seat in rowFife"
+          v-for="seat in row.slice(28, 38)"
           :key="seat"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <GSvg nameIcon="occupied" title="occupied" />
+          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
         </div>
       </div>
       <!-- 6 -->
       <div class="screen-cinema__seats__row screen-cinema__seats__row--6">
         <div
           class="screen-cinema__seats__seat"
-          v-for="seat in rowSix"
+          v-for="seat in row.slice(38, 50)"
           :key="seat"
         >
           <GSvg nameIcon="seat_cinema" title="seat cinema" />
           <span>{{ seat }}</span>
-          <GSvg nameIcon="occupied" title="occupied" />
+          <!-- <GSvg nameIcon="occupied" title="occupied" /> -->
         </div>
       </div>
     </div>
@@ -105,13 +115,75 @@ export default {
   name: "ScreenCinema",
   data() {
     return {
-      rowOne: [1, 2, 3, 4, 5],
-      rowTwo: [6, 7, 8, 9, 10, 11],
-      rowThree: [12, 13, 14, 15, 16, 17, 18, 19],
-      rowFour: [20, 21, 22, 23, 24, 25, 26, 27, 28],
-      rowFife: [29, 30, 31, 32, 33, 34, 35, 36, 37, 38],
-      rowSix: [39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+      row: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      seatsNumbers: [],
+      test: [4]
     };
+  },
+  methods: {
+    //
+    selectSeat(seat) {
+      if (this.seatsNumbers.includes(seat)) {
+        // 1) - Get index of seat if exsist in this seats numbers
+        const getIndexSeat = this.seatsNumbers.indexOf(seat);
+        // 2) - After get index will remove this index from seats numbers
+        this.seatsNumbers.splice(getIndexSeat, 1);
+      } else {
+        // Else push new seats in seats numbers
+        this.seatsNumbers.push(seat);
+      }
+    }
   }
 };
 </script>
@@ -120,7 +192,6 @@ export default {
 //
 .screen-cinema {
   margin-top: 40px;
-  //   perspective: 1000px;
 
   //
   &__head {
@@ -217,6 +288,7 @@ export default {
     &__seat {
       position: relative;
       margin: 0 2px;
+      cursor: pointer;
 
       //
       span {

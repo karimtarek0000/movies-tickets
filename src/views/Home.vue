@@ -79,5 +79,32 @@ main {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(2, 1fr);
+
+  //
+  @media (max-width: 1310px) {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 60vw;
+    justify-content: center;
+  }
+
+  @media (max-width: 1055px) {
+    grid-template-columns: 70vw;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 80vw;
+  }
+
+  @media (max-width: 770px) {
+    grid-template-columns: 90vw;
+  }
+
+  @media (max-width: 687px) {
+    grid-template-columns: 55vw;
+  }
+
+  @media (max-width: 564px) {
+    grid-template-columns: 70vw;
+  }
 }
 </style>

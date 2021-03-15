@@ -36,15 +36,23 @@ export default {
     margin-top: 20px;
     margin-bottom: 15px;
     font-weight: 500;
+
     //
     > * {
       flex-shrink: 0;
     }
+
     //
     h1 {
       font-size: 50px;
       margin-right: 15px;
+
+      //
+      @media (max-width: 783px) {
+        font-size: 30px;
+      }
     }
+
     //
     div {
       display: flex;
@@ -55,11 +63,21 @@ export default {
         height: 26px;
         width: 20px;
         margin-right: 5px;
+
+        //
+        @media (max-width: 783px) {
+          height: 17px;
+          width: 12px;
+        }
       }
       //
       span {
         display: block;
         font-size: 30px;
+
+        @media (max-width: 783px) {
+          font-size: 15px;
+        }
       }
     }
   }
@@ -69,7 +87,7 @@ export default {
     flex-flow: wrap row;
     justify-content: space-between;
     padding-top: 15px;
-    max-height: 70vh;
+    max-height: 67vh;
     overflow-y: auto;
 
     //
@@ -85,6 +103,11 @@ export default {
     margin-bottom: 60px;
     height: 60vh;
     position: relative;
+
+    //
+    @media (max-width: 687px) {
+      flex: 0 0 100%;
+    }
 
     //
     &::after {
@@ -107,15 +130,6 @@ export default {
       height: inherit;
       overflow: hidden;
       border-radius: 5px;
-
-      //
-      img {
-        max-width: 100%;
-        max-height: 100%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
     }
 
     //
@@ -149,7 +163,7 @@ export default {
       z-index: 2;
       text-transform: uppercase;
       color: var(--green);
-      padding: 0 12px;
+      padding: 0 5px 0 12px;
 
       //
       &__title {
