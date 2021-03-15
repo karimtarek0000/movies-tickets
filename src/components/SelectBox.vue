@@ -65,7 +65,10 @@ export default {
   },
   methods: {
     sendNewValue(e) {
-      this.$emit("input", e.target.value);
+      //
+      const getChanged = e.target.value === "" ? 1 : e.target.value;
+      //
+      this.$emit("input", getChanged);
       this.$emit("changed");
     }
   },

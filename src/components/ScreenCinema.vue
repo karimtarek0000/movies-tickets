@@ -2,7 +2,7 @@
   <div class="screen-cinema">
     <!-- Head -->
     <div class="screen-cinema__head">
-      <h3>choose seat</h3>
+      <h3>choose seats</h3>
       <GSvg nameIcon="screen-cinema" title="screen cinema" />
     </div>
     <!-- Explian icons -->

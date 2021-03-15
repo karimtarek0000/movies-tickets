@@ -69,17 +69,22 @@ export default {
   methods: {
     //
     changedParty() {
-      if (this.getMovie) {
+      if (this.getMovie && this.selectDay !== 1) {
         this.$store.commit("setOccupied", this.selectParty);
       }
     },
     //
-    changedDate() {
+    async changedDate() {
       if (this.getMovie && this.selectDay !== 1) {
-        this.$store.dispatch("getPartysMovie", {
+        await this.$store.dispatch("getPartysMovie", {
           nameMovie: this.getMovie.name,
           dateParty: this.selectDay
         });
+
+        //
+        if (this.selectParty !== 1) {
+          this.$store.commit("setOccupied", this.selectParty);
+        }
       }
     }
   },
@@ -92,6 +97,16 @@ export default {
     getMovie(newMovie) {
       //
       this.$store.commit("setSelectedMovie", newMovie);
+
+      //
+      // if (this.selectParty !== 1 && this.selectDay !== 1) {
+      //   //
+      //   this.$store.dispatch("getPartysMovie", {
+      //     nameMovie: newMovie.name,
+      //     dateParty: this.selectDay
+      //   });
+      //   this.$store.commit("setOccupied", this.selectParty);
+      // }
 
       //
       if (!newMovie) {
