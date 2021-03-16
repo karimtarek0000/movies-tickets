@@ -60,7 +60,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    //
+    // Get all movies
     async getMovies({ commit }) {
       try {
         const { data } = await axios.get("/movies");
@@ -70,7 +70,7 @@ export default new Vuex.Store({
       }
     },
 
-    //
+    // Get party specific name movie and date
     async getPartysMovie({ commit }, infoMovie) {
       try {
         const { data: partys } = await axios.get(
@@ -83,7 +83,7 @@ export default new Vuex.Store({
       }
     },
 
-    //
+    // Get dates
     async getDates({ commit }) {
       const { data: dates } = await axios.get("/dates");
 

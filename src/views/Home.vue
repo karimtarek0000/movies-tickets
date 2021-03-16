@@ -2,15 +2,20 @@
   <main>
     <!-- 1) - Section render all movies -->
     <SectionListMovie>
-      <!-- Movie card -->
-      <MovieCard
-        slot="cardMovie"
-        v-for="movie in allMovies"
-        :key="movie.id"
-        :movie="movie"
-        @movieInfo="getMovie = $event"
-        :getMovieIdSelected="statusGetMovie ? getMovie.id : null"
-      />
+      <template v-if="!allMovies">
+        <Loader />
+      </template>
+      <template v-else>
+        <!-- Movie card -->
+        <MovieCard
+          slot="cardMovie"
+          v-for="movie in allMovies"
+          :key="movie.id"
+          :movie="movie"
+          @movieInfo="getMovie = $event"
+          :getMovieIdSelected="statusGetMovie ? getMovie.id : null"
+        />
+      </template>
     </SectionListMovie>
     <!-- 2) - Section action user -->
     <SectionActionUser :statusGetMovie="statusGetMovie" :movie="getMovie">
@@ -67,25 +72,37 @@ export default {
     }
   },
   methods: {
-    //
+    // This function will run if changed party
     changedParty() {
-      if (this.getMovie && this.selectDay !== 1) {
+      if (this.getMovie && this.selectDay !== 1)
+        this.$store.commit("setOccupied", this.selectParty);
+    },
+
+    // This function will run if changed date
+    changedDate() {
+      // Run this function when change date
+      if (this.getMovie && this.selectDay !== 1) this.actionsSelectedMovie();
+    },
+
+    // This function into all actions will changes if user change name any time
+    async actionsSelectedMovie() {
+      await this.$store.dispatch("getPartysMovie", {
+        nameMovie: this.getMovie.name,
+        dateParty: this.selectDay
+      });
+
+      // If SELECT_PARTY not equal 1 will send SELECT_PARTY
+      if (this.selectParty !== 1) {
         this.$store.commit("setOccupied", this.selectParty);
       }
     },
-    //
-    async changedDate() {
-      if (this.getMovie && this.selectDay !== 1) {
-        await this.$store.dispatch("getPartysMovie", {
-          nameMovie: this.getMovie.name,
-          dateParty: this.selectDay
-        });
 
-        //
-        if (this.selectParty !== 1) {
-          this.$store.commit("setOccupied", this.selectParty);
-        }
-      }
+    // This function reset all actions
+    resetActionsSelectedMovie() {
+      this.$store.commit("setPartysMovie", null);
+      this.$store.commit("setOccupied");
+      this.selectDay = 1;
+      this.selectParty = 1;
     }
   },
   created() {
@@ -95,26 +112,15 @@ export default {
   watch: {
     //
     getMovie(newMovie) {
-      //
+      // 1) - Send new movie to state in store
       this.$store.commit("setSelectedMovie", newMovie);
 
-      //
-      // if (this.selectParty !== 1 && this.selectDay !== 1) {
-      //   //
-      //   this.$store.dispatch("getPartysMovie", {
-      //     nameMovie: newMovie.name,
-      //     dateParty: this.selectDay
-      //   });
-      //   this.$store.commit("setOccupied", this.selectParty);
-      // }
+      // 2) - If NEW_MOVIE and SELECT_PARTY and SELECT_DAY exsist will run fn ACTIONS_SELECT_MOVIE
+      if (newMovie && this.selectParty !== 1 && this.selectDay !== 1)
+        this.actionsSelectedMovie();
 
-      //
-      if (!newMovie) {
-        this.$store.commit("setPartysMovie", null);
-        this.$store.commit("setOccupied");
-        this.selectDay = 1;
-        this.selectParty = 1;
-      }
+      // 3) - If NEW_MOVIE is false will reset all actions
+      if (!newMovie) this.resetActionsSelectedMovie();
     }
   },
   components: {

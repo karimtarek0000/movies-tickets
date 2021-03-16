@@ -4,12 +4,14 @@ import router from "./router";
 import store from "./store";
 import GSvg from "./components/GSvg.vue";
 import LazyImage from "./components/lazyImage.vue";
+import Loader from "./components/Loader.vue";
 import "./server/axios.js";
 
 Vue.config.productionTip = false;
 
 Vue.component("GSvg", GSvg);
 Vue.component("LazyImage", LazyImage);
+Vue.component("Loader", Loader);
 
 new Vue({
   router,

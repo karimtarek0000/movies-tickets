@@ -12,6 +12,9 @@
     <!-- All Movies -->
     <div class="list-movies__movies">
       <!--  -->
+      <slot />
+
+      <!--  -->
       <slot name="cardMovie" />
     </div>
   </section>
@@ -92,7 +95,7 @@ export default {
 
     //
     @include changeScrollBar(
-      $width: 2,
+      $width: 0,
       $colorTrack: black,
       $colorThumb: rgba(255, 255, 255, 0.164)
     );

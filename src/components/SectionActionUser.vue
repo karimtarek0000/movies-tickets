@@ -11,7 +11,7 @@
       <span>{{ statusGetMovie ? movie.name : "No choose movie yet" }}</span>
     </div>
     <!--  -->
-    <div>
+    <div :style="{ opacity: statusGetMovie ? 1 : 0.3 }">
       <div class="action-user__select-box">
         <slot name="selectBox" />
       </div>
