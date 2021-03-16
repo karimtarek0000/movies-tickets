@@ -38,7 +38,11 @@
         label="choose a party"
       />
       <!-- 3) - Screen cinema -->
-      <ScreenCinema slot="screenCinema" />
+      <ScreenCinema
+        slot="screenCinema"
+        :selectDay="selectDay"
+        :selectParty="selectParty"
+      />
     </SectionActionUser>
   </main>
 </template>
@@ -74,14 +78,18 @@ export default {
   methods: {
     // This function will run if changed party
     changedParty() {
-      if (this.getMovie && this.selectDay !== 1)
+      if (this.getMovie && this.selectDay !== 1 && this.selectParty !== 1)
         this.$store.commit("setOccupied", this.selectParty);
+
+      if (this.selectParty === 1) this.resetActionsSelectedMovie();
     },
 
     // This function will run if changed date
     changedDate() {
       // Run this function when change date
       if (this.getMovie && this.selectDay !== 1) this.actionsSelectedMovie();
+
+      if (this.selectDay === 1) this.resetActionsSelectedMovie();
     },
 
     // This function into all actions will changes if user change name any time

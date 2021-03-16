@@ -30,7 +30,9 @@
           v-for="seat in row.slice(0, 5)"
           :key="seat"
           @click="
-            getSeatsOccupied.includes(seat) || !getSelectedMovie
+            getSeatsOccupied.includes(seat) ||
+            selectDay === 1 ||
+            selectParty === 1
               ? null
               : selectSeat(seat)
           "
@@ -59,7 +61,9 @@
           v-for="seat in row.slice(5, 11)"
           :key="seat"
           @click="
-            getSeatsOccupied.includes(seat) || !getSelectedMovie
+            getSeatsOccupied.includes(seat) ||
+            selectDay === 1 ||
+            selectParty === 1
               ? null
               : selectSeat(seat)
           "
@@ -88,7 +92,9 @@
           v-for="seat in row.slice(11, 19)"
           :key="seat"
           @click="
-            getSeatsOccupied.includes(seat) || !getSelectedMovie
+            getSeatsOccupied.includes(seat) ||
+            selectDay === 1 ||
+            selectParty === 1
               ? null
               : selectSeat(seat)
           "
@@ -117,7 +123,9 @@
           v-for="seat in row.slice(19, 28)"
           :key="seat"
           @click="
-            getSeatsOccupied.includes(seat) || !getSelectedMovie
+            getSeatsOccupied.includes(seat) ||
+            selectDay === 1 ||
+            selectParty === 1
               ? null
               : selectSeat(seat)
           "
@@ -146,7 +154,9 @@
           v-for="seat in row.slice(28, 38)"
           :key="seat"
           @click="
-            getSeatsOccupied.includes(seat) || !getSelectedMovie
+            getSeatsOccupied.includes(seat) ||
+            selectDay === 1 ||
+            selectParty === 1
               ? null
               : selectSeat(seat)
           "
@@ -175,7 +185,9 @@
           v-for="seat in row.slice(38, 50)"
           :key="seat"
           @click="
-            getSeatsOccupied.includes(seat) || !getSelectedMovie
+            getSeatsOccupied.includes(seat) ||
+            selectDay === 1 ||
+            selectParty === 1
               ? null
               : selectSeat(seat)
           "
@@ -207,6 +219,16 @@ import { mapGetters } from "vuex";
 //
 export default {
   name: "ScreenCinema",
+  props: {
+    selectDay: {
+      type: [String, Number],
+      required: true
+    },
+    selectParty: {
+      type: [String, Number],
+      required: true
+    }
+  },
   data() {
     return {
       row: [
@@ -279,6 +301,11 @@ export default {
         // Else push new seats in seats numbers
         this.seatsNumbers.push(seat);
       }
+    }
+  },
+  watch: {
+    getSelectedMovie() {
+      this.seatsNumbers = [];
     }
   }
 };
