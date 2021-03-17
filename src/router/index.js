@@ -11,16 +11,23 @@ const routes = [
     component: Home
   },
   {
-    path: "/sign-up",
-    name: "SignUp",
-    component: () =>
-      import(/* webpackChunkName: 'signUp' */ "@/views/auth/SignUp")
-  },
-  {
-    path: "/sign-in",
-    name: "SignIn",
-    component: () =>
-      import(/* webpackChunkName: 'signIn' */ "@/views/auth/SignIn")
+    path: "/auth",
+    component: () => import(/* webpackChunkName: 'auth' */ "@/views/auth/Auth"),
+    redirect: { name: "SignUp" },
+    children: [
+      {
+        path: "sign-up",
+        name: "SignUp",
+        component: () =>
+          import(/* webpackChunkName: 'auth' */ "@/views/auth/SignUp")
+      },
+      {
+        path: "sign-in",
+        name: "SignIn",
+        component: () =>
+          import(/* webpackChunkName: 'signIn' */ "@/views/auth/SignIn")
+      }
+    ]
   }
 ];
 

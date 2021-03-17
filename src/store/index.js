@@ -23,7 +23,9 @@ export default new Vuex.Store({
     // Auth
     user: {
       status: null
-    }
+    },
+    // Title page
+    titlePage: null
   },
   mutations: {
     //
@@ -70,6 +72,10 @@ export default new Vuex.Store({
     //
     setAlert(state, payload) {
       state.alert = payload;
+    },
+    //
+    setTitlePage(state, title) {
+      state.titlePage = title;
     }
   },
   getters: {
@@ -96,6 +102,10 @@ export default new Vuex.Store({
     //
     statusUser(state) {
       return state.user.status;
+    },
+    //
+    getTitlePage(state) {
+      return state.titlePage;
     }
   },
   actions: {

@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar">
     <!-- Logo -->
-    <div class="navbar__image">
+    <routerLink class="navbar__image" :to="{ name: 'Home' }">
       <img src="@/assets/image/logo.svg" alt="logo" />
-    </div>
+    </routerLink>
     <!-- Other -->
     <div class="navbar__register">
       <routerLink v-slot="{ navigate, href }" :to="{ name: 'SignUp' }" custom>
