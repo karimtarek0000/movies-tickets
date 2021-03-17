@@ -77,7 +77,7 @@ body {
 .app {
   width: 100%;
   display: grid;
-  grid-template-rows: 95px 1fr;
+  grid-template-rows: 85px 1fr;
 }
 
 .container {

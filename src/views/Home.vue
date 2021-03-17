@@ -181,6 +181,7 @@ main {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: repeat(2, 1fr);
+  overflow: hidden;
 
   //
   @media (max-width: 1310px) {

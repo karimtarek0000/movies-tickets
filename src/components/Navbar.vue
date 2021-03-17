@@ -30,11 +30,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 5px;
+  padding-top: 10px;
 
   //
   &__image {
-    height: 100px;
+    height: 95px;
 
     //
     img {

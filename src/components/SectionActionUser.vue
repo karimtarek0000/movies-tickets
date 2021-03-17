@@ -9,7 +9,7 @@
           nameIcon="select-movie"
           title="select-movie"
         />
-        <span>{{ statusGetMovie ? movie.name : "No choose movie yet" }}</span>
+        <span>{{ statusGetMovie ? movie.name : "Not choose movie yet" }}</span>
       </div>
     </div>
     <!--  -->

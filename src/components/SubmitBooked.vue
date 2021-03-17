@@ -36,5 +36,19 @@ button {
   // margin-top: 20px;
   font-size: 17px;
   font-weight: 400;
+
+  //
+  @media (max-width: 1310px) {
+    width: 50%;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (max-width: 500px) {
+    margin-top: -20px;
+  }
 }
 </style>
