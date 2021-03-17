@@ -48,7 +48,7 @@
             title="occupied"
           />
           <GSvg
-            v-show="seatsNumbers.includes(seat)"
+            v-show="getSeatsNumbers.includes(seat)"
             nameIcon="selected-seat"
             title="selected seat"
           />
@@ -79,7 +79,7 @@
             title="occupied"
           />
           <GSvg
-            v-show="seatsNumbers.includes(seat)"
+            v-show="getSeatsNumbers.includes(seat)"
             nameIcon="selected-seat"
             title="selected seat"
           />
@@ -110,7 +110,7 @@
             title="occupied"
           />
           <GSvg
-            v-show="seatsNumbers.includes(seat)"
+            v-show="getSeatsNumbers.includes(seat)"
             nameIcon="selected-seat"
             title="selected seat"
           />
@@ -141,7 +141,7 @@
             title="occupied"
           />
           <GSvg
-            v-show="seatsNumbers.includes(seat)"
+            v-show="getSeatsNumbers.includes(seat)"
             nameIcon="selected-seat"
             title="selected seat"
           />
@@ -172,7 +172,7 @@
             title="occupied"
           />
           <GSvg
-            v-show="seatsNumbers.includes(seat)"
+            v-show="getSeatsNumbers.includes(seat)"
             nameIcon="selected-seat"
             title="selected seat"
           />
@@ -203,7 +203,7 @@
             title="occupied"
           />
           <GSvg
-            v-show="seatsNumbers.includes(seat)"
+            v-show="getSeatsNumbers.includes(seat)"
             nameIcon="selected-seat"
             title="selected seat"
           />
@@ -215,7 +215,7 @@
 
 <script>
 //
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 //
 export default {
   name: "ScreenCinema",
@@ -282,30 +282,31 @@ export default {
         48,
         49,
         50
-      ],
-      seatsNumbers: []
+      ]
     };
   },
   computed: {
-    ...mapGetters(["getSelectedMovie", "getSeatsOccupied"])
+    ...mapGetters(["getSelectedMovie", "getSeatsOccupied", "getSeatsNumbers"])
   },
   methods: {
     //
+    ...mapMutations(["removeSeats", "addSeats"]),
+    //
     selectSeat(seat) {
-      if (this.seatsNumbers.includes(seat)) {
+      if (this.getSeatsNumbers.includes(seat)) {
         // 1) - Get index of seat if exsist in this seats numbers
-        const getIndexSeat = this.seatsNumbers.indexOf(seat);
+        const getIndexSeat = this.getSeatsNumbers.indexOf(seat);
         // 2) - After get index will remove this index from seats numbers
-        this.seatsNumbers.splice(getIndexSeat, 1);
+        this.removeSeats(getIndexSeat);
       } else {
         // Else push new seats in seats numbers
-        this.seatsNumbers.push(seat);
+        this.addSeats(seat);
       }
     }
   },
   watch: {
     getSelectedMovie() {
-      this.seatsNumbers = [];
+      this.removeSeats();
     }
   }
 };
@@ -314,7 +315,7 @@ export default {
 <style lang="scss">
 //
 .screen-cinema {
-  margin-top: 40px;
+  margin-top: 25px;
 
   //
   &__head {
@@ -383,6 +384,11 @@ export default {
       transform: rotateX(-60deg);
 
       //
+      @media (max-width: 437px) {
+        width: 300px;
+      }
+
+      //
       &::after {
         content: "";
         position: absolute;
@@ -399,6 +405,17 @@ export default {
   //
   &__seats {
     margin-top: -5px;
+
+    //
+    @media (max-width: 500px) {
+      margin-top: -40px;
+      transform: scale(0.8);
+    }
+
+    @media (max-width: 444px) {
+      margin-top: -40px;
+      transform: scale(0.7);
+    }
 
     //
     &__row {

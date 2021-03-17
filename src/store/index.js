@@ -12,7 +12,18 @@ export default new Vuex.Store({
     seatsOccupied: [],
     //
     datesPartys: null,
-    timesPartys: ["03:30 pm", "06:30 pm", "09:30 pm", "12:30 am"]
+    seatsNumbers: [],
+    timesPartys: ["03:30 pm", "06:30 pm", "09:30 pm", "12:30 am"],
+    // Alert
+    alert: {
+      type: null,
+      message: null,
+      status: false
+    },
+    // Auth
+    user: {
+      status: null
+    }
   },
   mutations: {
     //
@@ -43,6 +54,22 @@ export default new Vuex.Store({
         // Else will set seats occupied equal []
         state.seatsOccupied = timeParty;
       }
+    },
+    //
+    addSeats(state, seat) {
+      state.seatsNumbers.push(seat);
+    },
+    //
+    removeSeats(state, seat = null) {
+      if (seat === null) {
+        state.seatsNumbers = [];
+      } else {
+        state.seatsNumbers.splice(seat, 1);
+      }
+    },
+    //
+    setAlert(state, payload) {
+      state.alert = payload;
     }
   },
   getters: {
@@ -57,6 +84,18 @@ export default new Vuex.Store({
     //
     getSeatsOccupied(state) {
       return state.seatsOccupied;
+    },
+    //
+    getSeatsNumbers(state) {
+      return state.seatsNumbers;
+    },
+    //
+    getAlert(state) {
+      return state.alert;
+    },
+    //
+    statusUser(state) {
+      return state.user.status;
     }
   },
   actions: {

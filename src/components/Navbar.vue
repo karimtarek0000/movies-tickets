@@ -6,11 +6,11 @@
     </div>
     <!-- Other -->
     <div class="navbar__register">
-      <routerLink v-slot="{ navigate, href }" to="/test" custom>
+      <routerLink v-slot="{ navigate, href }" :to="{ name: 'SignUp' }" custom>
         <button :href="href" @click="navigate">sign up</button>
       </routerLink>
 
-      <routerLink v-slot="{ navigate, href }" to="/test" custom>
+      <routerLink v-slot="{ navigate, href }" :to="{ name: 'SignIn' }" custom>
         <button :href="href" @click="navigate">log in</button>
       </routerLink>
     </div>
@@ -30,11 +30,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 5px;
 
   //
   &__image {
-    height: 110px;
+    height: 100px;
 
+    //
     img {
       max-width: 100%;
       max-height: 100%;
@@ -54,6 +56,12 @@ export default {
       font-size: 20px;
       font-weight: 100;
       @extend %rest-btn;
+
+      //
+      @media (max-width: 421px) {
+        display: none;
+      }
+
       //
       &:nth-of-type(1) {
         border: 1px solid white;

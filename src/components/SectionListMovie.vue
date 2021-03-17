@@ -33,6 +33,7 @@ export default {
   &__head {
     width: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
     text-transform: capitalize;
     color: var(--green);
@@ -53,6 +54,10 @@ export default {
       //
       @media (max-width: 783px) {
         font-size: 30px;
+      }
+
+      @media (max-width: 421px) {
+        font-size: 20px;
       }
     }
 
@@ -80,6 +85,10 @@ export default {
 
         @media (max-width: 783px) {
           font-size: 15px;
+        }
+
+        @media (max-width: 421px) {
+          font-size: 18px;
         }
       }
     }

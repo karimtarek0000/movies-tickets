@@ -2,7 +2,7 @@
   <main>
     <!-- 1) - Section render all movies -->
     <SectionListMovie>
-      <template v-if="!allMovies">
+      <template v-if="allMovies.length === 0">
         <Loader />
       </template>
       <template v-else>
@@ -43,7 +43,10 @@
         :selectDay="selectDay"
         :selectParty="selectParty"
       />
+      <!-- 4) - Submit booked -->
+      <SubmitBooked slot="submit" @submit="submitBooked" />
     </SectionActionUser>
+    <!--  -->
   </main>
 </template>
 
@@ -54,7 +57,8 @@ import SelectBox from "@/components/SelectBox";
 import SectionListMovie from "@/components/SectionListMovie";
 import SectionActionUser from "@/components/SectionActionUser";
 import ScreenCinema from "@/components/ScreenCinema";
-import { mapState, mapGetters } from "vuex";
+import SubmitBooked from "@/components/SubmitBooked";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 //
 export default {
   name: "Home",
@@ -69,59 +73,89 @@ export default {
     //
     ...mapState(["allMovies", "timesPartys"]),
     //
-    ...mapGetters(["getDatesPartys"]),
+    ...mapGetters(["getDatesPartys", "getSeatsNumbers", "statusUser"]),
     //
     statusGetMovie() {
       return this.getMovie !== null;
     }
   },
   methods: {
+    //
+    ...mapMutations([
+      "setOccupied",
+      "setPartysMovie",
+      "setSelectedMovie",
+      "removeSeats",
+      "setAlert"
+    ]),
+
+    //
+    ...mapActions(["getPartysMovie", "getMovies", "getDates"]),
+
     // This function will run if changed party
     changedParty() {
+      // Check if GET_MOVIE exsist and SELECT_DAY not eqal 1
+      // and SELECT_PARTY not eqal 1 will run all actions
       if (this.getMovie && this.selectDay !== 1 && this.selectParty !== 1)
-        this.$store.commit("setOccupied", this.selectParty);
+        this.setOccupied(this.selectParty);
 
+      // If SELECT_PARTY equal 1 will reset all actions user
       if (this.selectParty === 1) this.resetActionsSelectedMovie();
     },
 
     // This function will run if changed date
     changedDate() {
-      // Run this function when change date
+      // Check if GET_MOVIE exsist and SELECT_DAY not eqal 1 will run all actions
       if (this.getMovie && this.selectDay !== 1) this.actionsSelectedMovie();
 
+      // If SELECT_DAY equal 1 will reset all actions user
       if (this.selectDay === 1) this.resetActionsSelectedMovie();
     },
 
     // This function into all actions will changes if user change name any time
     async actionsSelectedMovie() {
-      await this.$store.dispatch("getPartysMovie", {
+      // Send name movie and date movie
+      await this.getPartysMovie({
         nameMovie: this.getMovie.name,
         dateParty: this.selectDay
       });
 
       // If SELECT_PARTY not equal 1 will send SELECT_PARTY
-      if (this.selectParty !== 1) {
-        this.$store.commit("setOccupied", this.selectParty);
-      }
+      if (this.selectParty !== 1) this.setOccupied(this.selectParty);
     },
 
     // This function reset all actions
     resetActionsSelectedMovie() {
-      this.$store.commit("setPartysMovie", null);
-      this.$store.commit("setOccupied");
+      this.setPartysMovie(null);
+      this.setOccupied();
       this.selectDay = 1;
       this.selectParty = 1;
+      this.removeSeats();
+    },
+
+    // This function will run if submit button
+    submitBooked() {
+      if (this.getSeatsNumbers.length !== 0) {
+        if (this.statusUser) {
+          this.setAlert({ message: "error please try again!", status: true });
+          console.log("submited");
+          // this.resetActionsSelectedMovie();
+        } else {
+          this.$router.push({ name: "SignUp" });
+          this.setAlert({ message: "please register first", status: true });
+        }
+      }
     }
   },
   created() {
-    this.$store.dispatch("getMovies");
-    this.$store.dispatch("getDates");
+    this.getMovies();
+    this.getDates();
   },
   watch: {
     //
     getMovie(newMovie) {
       // 1) - Send new movie to state in store
-      this.$store.commit("setSelectedMovie", newMovie);
+      this.setSelectedMovie(newMovie);
 
       // 2) - If NEW_MOVIE and SELECT_PARTY and SELECT_DAY exsist will run fn ACTIONS_SELECT_MOVIE
       if (newMovie && this.selectParty !== 1 && this.selectDay !== 1)
@@ -136,7 +170,8 @@ export default {
     SectionActionUser,
     MovieCard,
     SelectBox,
-    ScreenCinema
+    ScreenCinema,
+    SubmitBooked
   }
 };
 </script>
@@ -149,7 +184,6 @@ main {
 
   //
   @media (max-width: 1310px) {
-    grid-template-rows: repeat(2, 1fr);
     grid-template-columns: 60vw;
     justify-content: center;
   }
@@ -172,6 +206,10 @@ main {
 
   @media (max-width: 564px) {
     grid-template-columns: 70vw;
+  }
+
+  @media (max-width: 445px) {
+    grid-template-columns: 100%;
   }
 }
 </style>

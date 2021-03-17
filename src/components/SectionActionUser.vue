@@ -3,19 +3,24 @@
     <!--  -->
     <div class="action-user__head">
       <h2>was selected movie</h2>
-      <GSvg
-        v-show="statusGetMovie"
-        nameIcon="select-movie"
-        title="select-movie"
-      />
-      <span>{{ statusGetMovie ? movie.name : "No choose movie yet" }}</span>
+      <div>
+        <GSvg
+          v-show="statusGetMovie"
+          nameIcon="select-movie"
+          title="select-movie"
+        />
+        <span>{{ statusGetMovie ? movie.name : "No choose movie yet" }}</span>
+      </div>
     </div>
     <!--  -->
     <div :style="{ opacity: statusGetMovie ? 1 : 0.3 }">
       <div class="action-user__select-box">
         <slot name="selectBox" />
       </div>
+      <!--  -->
       <slot name="screenCinema" />
+      <!--  -->
+      <slot name="submit" />
     </div>
   </section>
 </template>
@@ -42,8 +47,14 @@ export default {
   text-transform: capitalize;
   padding-left: 80px;
 
+  //
+  @media (max-width: 1360px) {
+    padding-left: 40px;
+  }
+
   @media (max-width: 1310px) {
     padding-left: 0;
+    margin-top: 25px;
   }
 
   //
@@ -55,6 +66,21 @@ export default {
     //
     @media (max-width: 1310px) {
       justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+
+      //
+      @media (max-width: 768px) {
+        margin-top: 15px;
+      }
     }
 
     //
@@ -78,6 +104,7 @@ export default {
   //
   &__select-box {
     display: flex;
+    flex-flow: wrap row;
     margin-top: 20px;
 
     //
@@ -112,10 +139,21 @@ export default {
       position: relative;
       width: 288px;
       height: 47px;
+      flex-shrink: 0;
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
 
       //
       &:nth-of-type(1) {
         margin-right: 20px;
+
+        //
+        @media (max-width: 768px) {
+          margin-right: 0;
+          margin-bottom: 30px;
+        }
       }
 
       //
