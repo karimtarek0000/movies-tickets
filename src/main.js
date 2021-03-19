@@ -6,6 +6,9 @@ import GSvg from "./components/GSvg.vue";
 import LazyImage from "./components/lazyImage.vue";
 import Loader from "./components/Loader.vue";
 import "./server/axios.js";
+import Vuelidate from "vuelidate";
+
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 

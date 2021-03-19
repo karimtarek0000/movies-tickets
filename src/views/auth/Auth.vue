@@ -28,16 +28,12 @@ export default {
   grid-template-rows: 70px 1fr;
   grid-template-columns: 400px;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 30px;
   text-transform: capitalize;
 
   //
   @media (max-width: 600px) {
     grid-template-columns: 90vw;
-  }
-
-  //
-  &__page {
   }
 }
 
@@ -48,7 +44,7 @@ export default {
     display: grid;
     grid-template: 20px 50px / 1fr;
     row-gap: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 
     //
     input {
@@ -72,10 +68,17 @@ export default {
       }
     }
 
+    //
     label {
       text-transform: capitalize;
       font-size: 20px;
       color: var(--green);
+    }
+
+    //
+    span {
+      font-size: 15px;
+      text-transform: lowercase;
     }
   }
 
@@ -88,6 +91,19 @@ export default {
     height: 50px;
     font-size: 22px;
     text-transform: uppercase;
+  }
+
+  //
+  &__haveAccount {
+    text-transform: lowercase;
+    margin-bottom: 10px;
+    text-align: right;
+
+    //
+    a {
+      color: var(--white);
+      text-transform: capitalize;
+    }
   }
 }
 </style>
