@@ -49,7 +49,7 @@ export default {
     //
     h1 {
       font-size: 50px;
-      margin-right: 15px;
+      margin-right: 5px;
 
       //
       @media (max-width: 783px) {
