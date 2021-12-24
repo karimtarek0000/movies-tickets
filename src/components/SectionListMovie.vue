@@ -6,7 +6,7 @@
       <!--  -->
       <div>
         <GSvg nameIcon="popcorn" title="popcorn" />
-        <span>booked now</span>
+        <span>book now</span>
       </div>
     </div>
     <!-- All Movies -->
