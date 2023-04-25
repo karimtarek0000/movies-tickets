@@ -1,3 +1,3 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://vast-savannah-07462.herokuapp.com";
+axios.defaults.baseURL = "https://movies-tickets-api.onrender.com";
