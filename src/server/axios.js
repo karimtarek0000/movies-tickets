@@ -1,3 +1,3 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://movies-tickets-api.onrender.com";
+axios.defaults.baseURL = "https://movies-tickets-api-production.up.railway.app";
